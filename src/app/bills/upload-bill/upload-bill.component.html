@@ -1,0 +1,99 @@
+<div class="text-center text-primary fs-5 mt-3 ">UPLOAD BILL</div>
+<p class="text-center font-weight-bold fs-5">or</p>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <input type="file" (change)="ReadExcel($event)" class="form-control w-50 m-auto " #t>
+</form>
+
+
+<div *ngIf="myForm.dirty">
+
+<table class="table my-3 table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Month-Year(MM-YYYY)</th>
+            <th>Contracted Load(KW)</th>
+            <th>Units</th>
+            <th>Energy Charges</th>
+            <th>Fixed Charges</th>
+            <th>Custom Charges</th>
+            <th>Electric Duty</th>
+            <th>Additional Charges</th>
+            <th>Additional Surcharge</th>
+            <th>Monthly Sales Revenue</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bill of xldata;trackBy:trackByMethod">
+            <!-- <td *ngFor="let data of bill">{{data}}</td> -->
+            <td>{{bill['Month- Year(MM-YYYY)'] | date :'dd MMM,YYYY'}}</td>
+            <td>{{bill['Contracted Load((KW)']}}</td>
+            <td>{{bill['Units']}}</td>
+            <td>{{bill['Energy Charges']}}</td>
+            <td>{{bill['Fixed Charges']}}</td>
+            <td>{{bill['Custom Charges']}}</td>
+            <td>{{bill['ED(Electric Duty)']}}</td>
+            <td>{{bill['Additional Charges']}}</td>
+            <td>{{bill['Additional Surcharge']}}</td>
+            <td>{{bill['Monthly Sales Revenue']}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+</div>
+
+
+
+
+
+
+<div class="m-3 p-3" style="overflow-y: scroll;height: 80vh;" *ngIf="!myForm.dirty">
+
+    Month- Year(MM-YYYY):
+<mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  Contracted Load((KW)):
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  Units:
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  Energy Charges:
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  Fixed Charges:
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  Custom Charges:
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  ED(Electric Duty):
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  Additional Charges:
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  Additional Surcharge:
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  Monthly Sales Revenue:
+  <mat-form-field class="example-full-width">
+    <input type="text" matInput  >
+  </mat-form-field>
+  <div class="text-center ">
+    <button mat-dialog-close="true" class="btn btn-danger mx-5 my-3"> Close</button>
+    <button class="btn btn-success mx-5 my-3"> Submit</button>
+  </div>
+</div>
+

@@ -1,0 +1,43 @@
+<input type="file" (change)="ReadExcel($event)" class="form-control w-50 m-4 ">
+
+
+<table class="table my-3 table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Month-Year(MM-YYYY)</th>
+            <th>Contracted Load(KW)</th>
+            <th>Units</th>
+            <th>Energy Charges</th>
+            <th>Fixed Charges</th>
+            <th>Custom Charges</th>
+            <th>Electric Duty</th>
+            <th>Additional Charges</th>
+            <th>Additional Surcharge</th>
+            <th>Monthly Sales Revenue</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bill of xldata;trackBy:trackByMethod">
+            <!-- <td *ngFor="let data of bill">{{data}}</td> -->
+            <td>{{bill['Month- Year(MM-YYYY)'] | date :'dd MMM,YYYY'}}</td>
+            <td>{{bill['Contracted Load((KW)']}}</td>
+            <td>{{bill['Units']}}</td>
+            <td>{{bill['Energy Charges']}}</td>
+            <td>{{bill['Fixed Charges']}}</td>
+            <td>{{bill['Custom Charges']}}</td>
+            <td>{{bill['ED(Electric Duty)']}}</td>
+            <td>{{bill['Additional Charges']}}</td>
+            <td>{{bill['Additional Surcharge']}}</td>
+            <td>{{bill['Monthly Sales Revenue']}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+<hr class="hr m-5">
+
+
