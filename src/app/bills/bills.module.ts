@@ -8,6 +8,8 @@ import { HistoricBillsComponent } from './historic-bills/historic-bills.componen
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/shared/shared.module';
+import { DataService } from 'src/shared/data.service';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     BillsRoutingModule,MatFormFieldModule,
-    MatInputModule,ReactiveFormsModule
-  ]
+    MatInputModule,ReactiveFormsModule,
+    SharedModule
+  ],
+  providers:[DataService]
 })
 export class BillsModule { }

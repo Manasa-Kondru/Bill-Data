@@ -1,44 +1,48 @@
-import { Component } from '@angular/core';
-import * as XLSX from 'xlsx';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { DataService } from 'src/shared/data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-historic-bills',
   templateUrl: './historic-bills.component.html',
   styleUrls: ['./historic-bills.component.scss']
 })
-export class HistoricBillsComponent {
+export class HistoricBillsComponent implements OnChanges {
   xldata: any[] = [];
+  @Input() parentData: any[] = [];
+  private parentDataSubscription: Subscription | null = null; // Initialize with null
+  displayArray: any[] = [];
 
-  ReadExcel(event: any) {
-    //storing uploaded file data
-    let data = event?.target.files[0];
-
-    //Reading file as Binary String
-    let fileReader = new FileReader();
-    fileReader.readAsBinaryString(data);
-
-    fileReader.onload = () => {
-      let workbook = XLSX.read(fileReader.result, { type: 'binary', cellDates: true });
-      let sheetNames = workbook.SheetNames;
-      this.xldata = XLSX.utils.sheet_to_json(workbook.Sheets[sheetNames[0]]);
-    }
-    fileReader.onloadend = () => {
-      this.process();
-    }
+  constructor(private dataService: DataService) {
+    this.subscribeToParentData();
   }
 
-  process() {
-    this.xldata?.map((ele: any) => {
-      let values: any = (ele['Month- Year(MM-YYYY)']);
-      values = values.split("-");
-      let date: any = new Date(new Date(new Date().setUTCHours(0, 0, 0, 0)).setUTCFullYear(values[1], values[0] - 1,1)).getTime();
-      ele['Month- Year(MM-YYYY)'] = date;
-      return ele;
-    });
+  private subscribeToParentData() {
+    if (this.parentDataSubscription) {
+      this.parentDataSubscription.unsubscribe();
+    }
+    this.parentDataSubscription = this.dataService.parentData$.subscribe(
+      (data) => {
+        this['parentData'] = data; // Use index signature notation to access the property
+        console.log('Received data in historicData:', this['parentData']);
+        this.displayArray = [...this.displayArray, ...this['parentData']];
+      }
+    );
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['parentData']) { // Use index signature notation
+      this.subscribeToParentData();
+    }
   }
 
   trackByMethod(index: number, el: any) {
     return el['Energy Charges'];
   }
 
+  ngOnDestroy() {
+    if (this.parentDataSubscription) {
+      this.parentDataSubscription.unsubscribe();
+    }
+  }
 }

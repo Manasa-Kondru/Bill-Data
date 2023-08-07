@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import * as XLSX from 'xlsx';
 
@@ -10,21 +10,22 @@ import * as XLSX from 'xlsx';
 })
 export class UploadBillComponent {
 
-
+  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   myForm: FormGroup;
   xldata: any[] = [];
 
-  constructor(  private dialogRef: MatDialogRef<UploadBillComponent>,private fb: FormBuilder)
-  {
+  constructor(private dialogRef: MatDialogRef<UploadBillComponent>, private fb: FormBuilder) {
     this.myForm = this.fb.group({
       fileInput: [''], // Initialize with the initial value if needed
-  })
-}
+    })
 
-onSubmit()
-{
-  
-}
+    
+  }
+
+  onSubmit() {
+    this.submit.emit(this.xldata);
+    this.dialogRef.close();
+  }
 
 
   ReadExcel(event: any) {
@@ -49,11 +50,13 @@ onSubmit()
     this.xldata?.map((ele: any) => {
       let values: any = (ele['Month- Year(MM-YYYY)']);
       values = values.split("-");
-      let date: any = new Date(new Date(new Date().setUTCHours(0, 0, 0, 0)).setUTCFullYear(values[1], values[0] - 1,1)).getTime();
+      let date: any = new Date(new Date(new Date().setUTCHours(0, 0, 0, 0)).setUTCFullYear(values[1], values[0] - 1, 1)).getTime();
       ele['Month- Year(MM-YYYY)'] = date;
       return ele;
     });
   }
+
+
 
   trackByMethod(index: number, el: any) {
     return el['Energy Charges'];
