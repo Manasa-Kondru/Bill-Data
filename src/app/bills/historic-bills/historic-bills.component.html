@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let bill of displayArray;trackBy:trackByMethod">
+        <tr *ngFor="let bill of displayArray|uniquefilter:propertyToFilter;trackBy:trackByMethod">
             <!-- <td *ngFor="let data of bill">{{data}}</td> -->
             <td>{{bill['Month- Year(MM-YYYY)'] | date :'dd MMM,YYYY'}}</td>
             <td>{{bill['Contracted Load((KW)']}}</td>

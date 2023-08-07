@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule } from '@angular/material/form-field';
+import { SharedModule } from 'src/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {MatFormFieldModule } from '@angular/material/form-field';
     BrowserAnimationsModule,
     MatDialogModule,
     MatDialogModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],
