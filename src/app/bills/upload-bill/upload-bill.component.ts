@@ -53,8 +53,8 @@ export class UploadBillComponent {
     }
     this.dialogRef.close();
   }
-  onClose()
-  {
+
+  onClose() {
     this.dialogRef.close();
   }
 
@@ -80,30 +80,27 @@ export class UploadBillComponent {
     }
   }
 
-  async process() {
-    this.xldata?.map((ele: any) => {
-      let values: any = (ele['Month- Year(MM-YYYY)']);
-      values = values.split("-");
-      let date: any = new Date(new Date(new Date().setUTCHours(0, 0, 0, 0)).setUTCFullYear(values[1], values[0] - 1, 1)).getTime();
+  async processDates(dataArray: any[]) {
+    return dataArray.map((ele: any) => {
+      const values = ele['Month- Year(MM-YYYY)'].split("-");
+      const date = new Date(values[1], values[0] - 1).getTime();
       ele['Month- Year(MM-YYYY)'] = date;
       return ele;
     });
-    let check = await this.dummyarray?.map((ele)=>{return ele['Month- Year(MM-YYYY)']});
-    let unique = new Set(...check);
-    console.log(check.length, unique.size)
+  }
+
+  async process() {
+    this.xldata = await this.processDates(this.xldata);
+    const check = this.dummyarray.map(ele => ele['Month- Year(MM-YYYY)']);
+    const unique = new Set(check);
+    console.log(check.length, unique.size);
   }
 
   async process1() {
-    this.dummyarray?.map((ele: any) => {
-      let values: any = (ele['Month- Year(MM-YYYY)']);
-      values = values.split("-");
-      let date: any = new Date(new Date(new Date().setUTCHours(0, 0, 0, 0)).setUTCFullYear(values[1], values[0] - 1, 1)).getTime();
-      ele['Month- Year(MM-YYYY)'] = date;
-      return ele;
-    });
-    let check = await this.dummyarray?.map((ele)=>{return ele['Month- Year(MM-YYYY)']});
-    let unique = new Set(...check);
-    console.log(check.length, unique.size)
+    this.dummyarray = await this.processDates(this.dummyarray);
+    const check = this.dummyarray.map(ele => ele['Month- Year(MM-YYYY)']);
+    const unique = new Set(check);
+    console.log(check.length, unique.size);
   }
 
   trackByMethod(index: number, el: any) {

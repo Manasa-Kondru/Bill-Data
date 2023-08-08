@@ -9,7 +9,7 @@ import { DataService } from 'src/shared/data.service';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent {
-  constructor(private matdialog: MatDialog, private dataService: DataService) {}
+  constructor(private matdialog: MatDialog, private dataService: DataService) { }
 
   upload() {
     const dialogRef = this.matdialog.open(UploadBillComponent, {
@@ -21,7 +21,6 @@ export class LayoutComponent {
 
     dialogRef.componentInstance.submit.subscribe((xlData: any[]) => {
       this.dataService.updateParentData(xlData);
-      console.log('Received data in LayoutComponent:', xlData);
     });
   }
 }

@@ -4,19 +4,24 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'uniquefilter'
 })
 export class UniquefilterPipe implements PipeTransform {
-
   transform(array: any[], propertyToFilter: string): any[] {
+    if (!array || !array.length || !propertyToFilter) {
+      return [];
+    }
+
+    const uniqueMap: { [key: string]: boolean } = {};
+
     const uniqueArray: any[] = [];
-    const seen = new Set();
 
     for (const item of array) {
       const key = item[propertyToFilter];
 
-      if (!seen.has(key)) {
-        seen.add(key);
+      if (!uniqueMap[key]) {
+        uniqueMap[key] = true;
         uniqueArray.push(item);
-      }
-      else{
+      } else {
+        // Handle duplicates if needed
+        // You can store the duplicate information for further processing if required
         window.alert('Duplicate record');
       }
     }

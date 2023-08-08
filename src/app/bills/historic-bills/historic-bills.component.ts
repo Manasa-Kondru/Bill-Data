@@ -23,8 +23,8 @@ export class HistoricBillsComponent implements OnChanges {
     }
     this.parentDataSubscription = this.dataService.parentData$.subscribe(
       (data) => {
-        this['parentData'] = data; // Use index signature notation to access the property
-        this.displayArray = [...this.displayArray, ...this['parentData']];
+        this.parentData = data; // Use index signature notation to access the property
+        this.displayArray = [...this.displayArray, ...this.parentData];
       }
     );
   }
@@ -35,9 +35,6 @@ export class HistoricBillsComponent implements OnChanges {
     }
   }
 
-  removeDuplicates(arr: any[]): any[] {
-    return arr.filter((value, index, self) => self.indexOf(value) === index);
-  }
 
   trackByMethod(index: number, el: any) {
     return el['Energy Charges'];
