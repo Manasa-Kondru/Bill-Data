@@ -5,7 +5,7 @@
     <input type="file" (change)="ReadExcel($event)" class="form-control w-50 m-auto mb-3" (click)="onSelectingFile()" #t>
   </div>
 
-  <div >
+  <div *ngIf="selectedSection === 'xlinfo'">
 
     <table class="table my-3 table-bordered table-responsive" >
       <thead >
@@ -24,7 +24,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let bill of xldata;trackBy:trackByMethod">
-          <td *ngFor="let data of bill">{{data}}</td>
+          <!-- <td *ngFor="let data of bill">{{data|json}}</td> -->
           <td>{{bill['Month- Year(MM-YYYY)'] | date :'dd MMM,YYYY'}}</td>
           <td>{{bill['Contracted Load((KW)']}}</td>
           <td>{{bill['Units']}}</td>
@@ -87,14 +87,15 @@
 
   <div class="text-center ">
 
-    <button mat-dialog-close="true" class="btn btn-danger mx-5 my-5" > Close</button>
+    <button class="btn btn-danger mx-5 my-5" (click)="onClose()"> Close</button>
     <button class="btn btn-success mx-5 my-5" (click)="onSubmit()"> Submit</button>
   </div>
   </div>
 
   <div class="text-center" *ngIf="selectedSection === 'xlinfo'">
 
-    <button mat-dialog-close="true" class="btn btn-danger mx-5 my-5" > Close</button>
+
+    <button class="btn btn-danger mx-5 my-5" (click)="onClose()"> Close</button>
     <button class="btn btn-success mx-5 my-5" (click)="onSubmit()"> Submit</button>
   </div>
 

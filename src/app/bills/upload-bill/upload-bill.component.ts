@@ -46,21 +46,21 @@ export class UploadBillComponent {
   onSubmit() {
     if (this.selectedSection === 'xlinfo') {
       this.submit.emit(this.xldata);
-    }
-    else {
+    } else {
       this.dummyarray.push(this.myForm.get('forminfo')?.value);
       this.process1();
       this.submit.emit(this.dummyarray);
     }
     this.dialogRef.close();
   }
-
-  onSelectingFile() {
-    this.selectedSection = 'xlinfo'
+  onClose()
+  {
+    this.dialogRef.close();
   }
 
-
-
+  onSelectingFile() {
+    this.selectedSection = 'xlinfo';
+  }
 
   ReadExcel(event: any) {
     //storing uploaded file data
@@ -80,7 +80,7 @@ export class UploadBillComponent {
     }
   }
 
-  process() {
+  async process() {
     this.xldata?.map((ele: any) => {
       let values: any = (ele['Month- Year(MM-YYYY)']);
       values = values.split("-");
@@ -88,9 +88,12 @@ export class UploadBillComponent {
       ele['Month- Year(MM-YYYY)'] = date;
       return ele;
     });
+    let check = await this.dummyarray?.map((ele)=>{return ele['Month- Year(MM-YYYY)']});
+    let unique = new Set(...check);
+    console.log(check.length, unique.size)
   }
 
-  process1() {
+  async process1() {
     this.dummyarray?.map((ele: any) => {
       let values: any = (ele['Month- Year(MM-YYYY)']);
       values = values.split("-");
@@ -98,15 +101,12 @@ export class UploadBillComponent {
       ele['Month- Year(MM-YYYY)'] = date;
       return ele;
     });
+    let check = await this.dummyarray?.map((ele)=>{return ele['Month- Year(MM-YYYY)']});
+    let unique = new Set(...check);
+    console.log(check.length, unique.size)
   }
-
-
 
   trackByMethod(index: number, el: any) {
     return el['Energy Charges'];
   }
-
-
-
-
 }

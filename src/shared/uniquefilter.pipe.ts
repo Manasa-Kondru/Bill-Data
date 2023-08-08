@@ -16,6 +16,9 @@ export class UniquefilterPipe implements PipeTransform {
         seen.add(key);
         uniqueArray.push(item);
       }
+      else{
+        window.alert('Duplicate record');
+      }
     }
 
     return uniqueArray;
